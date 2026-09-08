@@ -1,4 +1,0 @@
-streamlit
-pillow
-rembg[cpu]
-onnxruntime

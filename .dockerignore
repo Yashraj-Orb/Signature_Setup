@@ -7,3 +7,10 @@ __pycache__
 node_modules
 ngrok_*
 uploads
+.env
+.env.*
+*.log
+.postman
+postman
+test-*.png
+test-*.txt

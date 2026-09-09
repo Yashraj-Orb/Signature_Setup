@@ -1,9 +1,12 @@
-# Orbrick Signature Studio
+# Orbrick Studio
 
-The project runs as one deployable Railway service:
+The project runs as one deployable FastAPI service with two browser tools:
 
-- `api.py` is the FastAPI backend. It loads the `rembg` model once during application startup, configures ONNX Runtime, and serves the frontend and API from the same process.
-- `frontend/` is the custom HTML, CSS, and JavaScript frontend. It calls `/remove-background` on the same origin.
+- `/signature/` is the email signature generator. It calls `/remove-background` on the same origin.
+- `/backgrounds/` is the browser-only Teams background generator. It creates 1920x1080 PNGs locally with Canvas and does not require a backend endpoint.
+- `/` is the tool selector.
+- `api.py` loads the `rembg` model once during application startup, configures ONNX Runtime, and serves both tools and the API from the same process.
+- `frontend/` contains the selector, signature tool, background generator, and its bundled background images.
 
 ## Run locally
 
@@ -19,15 +22,20 @@ Start the application:
 uvicorn api:app --host 127.0.0.1 --port 8000 --workers 1
 ```
 
-Open the frontend at `http://localhost:8000`.
+Open the tool selector at `http://localhost:8000`.
+
+The individual tools are available at:
+
+- `http://localhost:8000/signature/`
+- `http://localhost:8000/backgrounds/`
 
 The readiness endpoint is `GET /health/ready`. It returns `503` until the model session has loaded, then `200`.
 
-## Docker and Railway
+## Docker deployment
 
-The `Dockerfile` installs the API, downloads the configured `u2net` model during image build, and starts Uvicorn. FastAPI serves the custom frontend on the same public port as the API. Railway should run this Dockerfile as one persistent service with one replica. `railway.json` health-checks the public root route.
+The `Dockerfile` installs the API, downloads the configured `u2net` model during image build, and starts Uvicorn. FastAPI serves the custom frontend on the same port as the API. The image uses the platform-provided `PORT` variable when available and defaults to `8000` locally.
 
-Optional Railway variables:
+Optional environment variables:
 
 ```text
 REMBG_MODEL=u2net
@@ -36,20 +44,9 @@ ONNX_INTRA_OP_THREADS=1
 ONNX_INTER_OP_THREADS=1
 ```
 
-No separate frontend service or frontend URL variable is required because the browser calls the API on the same origin.
+No separate frontend service or frontend URL variable is required because the browser calls the API on the same origin. The image health check uses `GET /health/ready` and waits for the rembg model to load.
 
-Keep the service on one worker and one replica. Each additional worker or replica loads another copy of the model into memory.
-
-## Baseline benchmark
-
-Record these values from the Railway deployment before changing concurrency or replicas:
-
-1. Build time and container startup time until `/health/ready` returns `200`.
-2. Peak RAM and CPU during startup and one inference.
-3. `X-Inference-Seconds` from the image response for several small, medium, and large images.
-4. End-to-end upload time, including network transfer.
-
-The first request should no longer download the model; the model is present in the image and loaded before the service is marked ready.
+Keep the service on one worker and one replica unless the deployment platform has enough memory for each additional model copy. The first request should not download the model; it is present in the image and loaded before the service is marked ready.
 
 ## Local Docker verification
 
@@ -67,4 +64,4 @@ docker run --rm --name orbrick-background-app -p 8000:8000 orbrick-background-ap
 
 Open `http://localhost:8000`, upload a photo, and verify the generated signature. Inspect the startup logs to confirm that the model loads once before the API becomes ready.
 
-The frontend preserves the existing controls and signature output while replacing the Streamlit interface with a custom responsive editor.
+The signature tool preserves its existing controls and output. The background generator is integrated from the standalone browser project without changing its template selection, custom image upload, editable fields, or PNG download behavior.

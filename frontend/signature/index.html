@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Create a polished Orbrick email signature.">
+  <title>Orbrick Signature Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Orbrick home">
+        <img class="brand-logo" src="https://orbrick.com/wp-content/uploads/2024/08/Main-logoTransparent.png" alt="Orbrick">
+      </a>
+      <nav class="tool-nav" aria-label="Tools">
+        <a href="/">All tools</a>
+      </nav>
+    </header>
+
+    <section class="intro">
+      <div>
+        <h1>Email Signature Tool</h1>
+        <p class="intro-copy">Add your details, refine your photo, and download a ready-to-use signature</p>
+      </div>
+      <div class="intro-line" aria-hidden="true"></div>
+    </section>
+
+    <section class="workspace">
+      <div class="editor-column">
+        <section class="panel details-panel">
+          <div class="panel-heading"><span class="step">01</span><div><h2>Your details</h2><p>These appear in your signature.</p></div></div>
+          <div class="field-grid">
+            <label class="field"><span>Full name</span><input id="name" type="text" placeholder="e.g. Jane Smith"></label>
+            <label class="field"><span>Job title / role</span><input id="title" type="text" placeholder="e.g. Founder & CEO"></label>
+            <label class="field"><span>Mobile number</span><input id="phone" type="text" placeholder="e.g. +91 7470437629"></label>
+            <label class="field"><span>LinkedIn profile <small>(optional)</small></span><input id="linkedin" type="url" placeholder="linkedin.com/in/your-name"></label>
+          </div>
+        </section>
+
+        <section class="panel photo-panel">
+          <div class="panel-heading"><span class="step">02</span><div><h2>Profile photo</h2><p>Use a clear, front-facing photo.</p></div></div>
+          <label class="upload-zone" id="upload-zone" for="photo-input">
+            <span class="upload-icon">+</span><strong id="upload-title">Upload a photo</strong><span id="upload-copy">PNG, JPG or JPEG up to 15 MB</span>
+            <input id="photo-input" type="file" accept="image/png,image/jpeg,image/jpg">
+          </label>
+          <div class="photo-options">
+            <label class="switch-row"><span><strong>Remove background</strong><small>Recommended for the cleanest result</small></span><input id="remove-bg" type="checkbox" checked><i class="switch"></i></label>
+            <button class="advanced-toggle" id="advanced-toggle" type="button" aria-expanded="false" aria-controls="adjustments"><span>Photo adjustments</span><span class="chevron">+</span></button>
+            <div class="adjustments" id="adjustments" aria-hidden="true">
+              <label class="range-field"><span>Zoom <output id="zoom-value">1.0x</output></span><input id="zoom" type="range" min="0.5" max="3" value="1" step="0.1"></label>
+              <label class="range-field"><span>Horizontal position <output id="x-value">0</output></span><input id="x-offset" type="range" min="-100" max="100" value="0" step="1"></label>
+              <label class="range-field"><span>Vertical position <output id="y-value">0</output></span><input id="y-offset" type="range" min="-100" max="100" value="0" step="1"></label>
+              <label class="range-field"><span>Sharpness <output id="sharp-value">50%</output></span><input id="sharpness" type="range" min="0" max="150" value="50" step="10"></label>
+            </div>
+          </div>
+          <p class="error-message" id="error-message" role="alert" hidden></p>
+        </section>
+
+      </div>
+
+      <section class="preview-column">
+        <div class="preview-heading"><h2>Your signature</h2></div>
+        <div class="preview-stage" id="preview-stage">
+          <div class="signature-wrap" id="signature-preview"></div>
+          <div class="empty-preview" id="empty-preview"><div class="empty-icon">✦</div><strong>Your signature will appear here</strong><span>Fill in your details to see a live preview.</span></div>
+        </div>
+        <div class="preview-actions">
+          <button class="button button-primary" id="copy-signature" type="button" disabled><span>Copy signature</span><b>▣</b></button>
+          <button class="button button-secondary" id="download-html" type="button" disabled><span>Download HTML</span><b>↓</b></button>
+          <button class="button button-secondary" id="download-photo" type="button" disabled><span>Download PNG</span><b>↓</b></button>
+        </div>
+      </section>
+    </section>
+
+    <footer><span>ORBRICK</span></footer>
+  </main>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

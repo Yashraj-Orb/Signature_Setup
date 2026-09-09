@@ -18,9 +18,6 @@ button, input { font: inherit; }
 button { cursor: pointer; }
 .shell { max-width: 1260px; margin: 0 auto; padding: 26px 38px 30px; }
 .topbar { display: flex; align-items: center; justify-content: space-between; }
-.tool-nav { display: flex; align-items: center; gap: 18px; }
-.tool-nav a { color: var(--muted); font-size: 12px; font-weight: 700; text-decoration: none; }
-.tool-nav a:hover { color: var(--orange); }
 .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; }
 .brand-logo { width: 180px; height: auto; display: block; }
 .dot { width: 7px; height: 7px; display: inline-block; border-radius: 50%; background: #60aa72; }
@@ -96,4 +93,4 @@ h2 { margin-bottom: 4px; color: var(--purple-deep); font-family: "Space Grotesk"
 footer { display: flex; justify-content: space-between; margin-top: 34px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
 footer span:first-child { color: var(--purple); font-weight: 700; }
 @media (max-width: 900px) { .shell { padding: 22px 20px; } .intro { margin-top: 55px; } .workspace { grid-template-columns: 1fr; } .preview-column { order: -1; } .intro-line { width: 20%; } }
-@media (max-width: 560px) { .shell { padding: 18px 14px; } .topbar { align-items: flex-start; gap: 18px; } .tool-nav { flex-direction: column; align-items: flex-end; gap: 6px; } .intro { margin: 45px 0 28px; } h1 { font-size: 43px; letter-spacing: -2px; } .intro-line { display: none; } .field-grid, .preview-actions { grid-template-columns: 1fr; } .panel, .preview-column { padding: 18px; } .preview-stage { min-height: 230px; padding: 18px; } footer { display: grid; gap: 8px; } }
+@media (max-width: 560px) { .shell { padding: 18px 14px; } .intro { margin: 45px 0 28px; } h1 { font-size: 43px; letter-spacing: -2px; } .intro-line { display: none; } .field-grid, .preview-actions { grid-template-columns: 1fr; } .panel, .preview-column { padding: 18px; } .preview-stage { min-height: 230px; padding: 18px; } footer { display: grid; gap: 8px; } }

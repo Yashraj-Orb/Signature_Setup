@@ -1,0 +1,9 @@
+cd /home/garvika/background_generator && python3 -c "
+import os, json, re
+folder='Background_images'
+files=sorted([f for f in os.listdir(folder) if f.endswith('.png') and 'Zone' not in f])
+html=open('index.html').read()
+html=re.sub(r'const BG_FILES=\[.*?\]', 'const BG_FILES='+json.dumps(files), html)
+open('index.html','w').write(html)
+print('Updated with', len(files), 'files')
+"

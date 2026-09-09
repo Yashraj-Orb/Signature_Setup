@@ -33,7 +33,7 @@ def configured_origins() -> list[str]:
 
 def create_rembg_session():
     session_options = ort.SessionOptions()
-    session_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_BASIC
+    session_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
     session_options.intra_op_num_threads = ONNX_INTRA_OP_THREADS
     session_options.inter_op_num_threads = ONNX_INTER_OP_THREADS
     return new_session(MODEL_NAME, sess_opts=session_options)
@@ -141,4 +141,11 @@ async def frontend():
     return FileResponse("frontend/index.html")
 
 
+@app.get("/signature", include_in_schema=False)
+@app.get("/signature/", include_in_schema=False)
+async def signature_frontend():
+    return FileResponse("frontend/signature/index.html")
+
+
 app.mount("/assets", StaticFiles(directory="frontend"), name="frontend-assets")
+app.mount("/backgrounds", StaticFiles(directory="frontend/backgrounds", html=True), name="background-generator")
